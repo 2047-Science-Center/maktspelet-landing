@@ -28,6 +28,7 @@
   --ease-out:cubic-bezier(0.23,1,0.32,1);
   --ease-io:cubic-bezier(0.77,0,0.175,1);
   --radius:16px;
+  --fundbar-h:46px;
 }
 
 *{box-sizing:border-box}
@@ -52,7 +53,7 @@ p{line-height:1.7; color:var(--dim); font-size:clamp(15px,1.5vw,18px); font-weig
 section{position:relative; z-index:2}
 
 /* NAV */
-.nav{position:fixed; top:0; left:0; right:0; z-index:40; display:flex; align-items:center; justify-content:space-between;
+.nav{position:fixed; top:var(--fundbar-h); left:0; right:0; z-index:40; display:flex; align-items:center; justify-content:space-between;
   padding:14px clamp(16px,4vw,40px); transition:background .4s var(--ease-out), border-color .4s, backdrop-filter .4s;
   border-bottom:1px solid transparent}
 .nav.scrolled{background:rgba(12,11,7,.72); backdrop-filter:blur(12px) saturate(1.1); border-bottom:1px solid rgba(90,85,71,.4)}
@@ -261,13 +262,13 @@ footer small{font-family:var(--font-num); font-size:11px; letter-spacing:.14em; 
 .fundbox p{margin:0; color:var(--text); font-size:clamp(14px,1.5vw,16px); line-height:1.62}
 @media(max-width:560px){.fundbox{flex-direction:column; gap:11px}}
 
-/* funding logo strip (above footer) */
-.fundstrip{background:#F3EFE4; padding:clamp(22px,3.4vw,32px) 0; position:relative; z-index:2}
-.fundstrip .wrap{display:flex; align-items:center; justify-content:center; gap:clamp(22px,5vw,52px); flex-wrap:wrap}
-.fundstrip img{width:auto; display:block}
-.fundstrip .med{height:clamp(52px,7vw,70px)}
-.fundstrip .bank{height:clamp(40px,5.4vw,54px)}
-.fundstrip .medtxt{font-family:var(--font-num); font-weight:700; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:#5a7d6e}
+/* persistent funding bar (fixed, top) */
+.fundbar{position:fixed; top:0; left:0; right:0; z-index:50; height:var(--fundbar-h);
+  background:#FFFFFF; border-bottom:1px solid #E6DFCC;
+  display:flex; align-items:center; justify-content:center; gap:clamp(10px,2vw,16px); padding:0 14px}
+.fundbar .lbl{font-family:var(--font-num); font-weight:700; font-size:clamp(9px,1.3vw,11px); letter-spacing:.2em; text-transform:uppercase; color:#5f8273; white-space:nowrap}
+.fundbar .bank-txt{font-family:var(--font-disp); font-weight:700; font-size:clamp(12px,1.6vw,14px); letter-spacing:.01em; color:#141109; white-space:nowrap}
+.fundbar img.bank{height:clamp(26px,3.6vw,34px); width:auto; display:none}
 
 /* REVEAL */
 .reveal{opacity:0; transform:translateY(26px); transition:opacity .9s var(--ease-out), transform .9s var(--ease-out)}
@@ -288,6 +289,14 @@ footer small{font-family:var(--font-num); font-size:11px; letter-spacing:.14em; 
 <body>
 
 <!-- NAV -->
+<div class="fundbar">
+  <span class="lbl" data-i18n="fund_lbl">Med stöd från</span>
+  <img class="bank" src="media/sparbanken-bergslagen.jpg" alt="Sparbanken Bergslagen"
+       onload="this.style.display='block';var t=document.getElementById('bankTxt');if(t)t.style.display='none'"
+       onerror="this.remove()">
+  <span class="bank-txt" id="bankTxt">Sparbanken Bergslagen</span>
+</div>
+
 <nav class="nav" id="nav">
   <div class="brand">MAKTSPELET<small>THE EXPERIENCE</small></div>
   <div class="navright">
@@ -480,13 +489,6 @@ footer small{font-family:var(--font-num); font-size:11px; letter-spacing:.14em; 
   </div>
 </section>
 
-<section class="fundstrip" id="fundstrip" aria-label="Finansiering" style="display:none">
-  <div class="wrap">
-    <img class="med" src="media/med-stod-fran.png" alt="Med stöd från" onload="document.getElementById('fundstrip').style.display='block'" onerror="this.remove()">
-    <img class="bank" src="media/sparbanken-bergslagen.png" alt="Sparbanken Bergslagen" onload="document.getElementById('fundstrip').style.display='block'" onerror="this.remove()">
-  </div>
-</section>
-
 <footer>
   <div class="wrap">
     <img src="media/logo.png" alt="Maktspelet — The Experience">
@@ -551,6 +553,7 @@ var I18N = {
     cta_lead:"Maktspelet byggs för att tas emot och köras av museer och arrangörer. Hör av er så berättar vi hur ni kommer igång.",
     cta_primary:"Mejla oss — boka Maktspelet →", cta_ghost:"Se versionerna",
     cta_ph:"Platshållare — Maddes exakta mejladress bekräftas av Josef",
+    fund_lbl:"Med stöd från",
     fund_tag:"Projektfinansierat t.o.m. juni 2027",
     fund_body:"Fram till juni 2027 är Maktspelet projektfinansierat för spridning i södra Dalarna. Under perioden står ni bara för transporten till och från Borlänge. Med stöd från Sparbanken Bergslagen.",
     footer:"En immersiv upplevelse · utkast",
@@ -611,6 +614,7 @@ var I18N = {
     cta_lead:"Maktspelet is built to be hosted and run by museums and organisers. Get in touch and we'll tell you how to get started.",
     cta_primary:"Email us — book Maktspelet →", cta_ghost:"See the versions",
     cta_ph:"Placeholder — Madde's exact email to be confirmed by Josef",
+    fund_lbl:"With support from",
     fund_tag:"Project-funded until June 2027",
     fund_body:"Until June 2027 Maktspelet is project-funded for venues across southern Dalarna. During this period your only cost is transport to and from Borlänge. With support from Sparbanken Bergslagen.",
     footer:"An immersive experience · draft",
@@ -619,7 +623,7 @@ var I18N = {
   }
 };
 
-var MAIL_TO = "josef.sjonneby@2047.nu,madelene.stenberg@2047.nu";
+var MAIL_TO = "josef.sjonneby@2047.nu,madelene.stenberg@2047.nu,klara.jons@2047.nu";
 
 (function(){
   var htmlEl = document.documentElement;
