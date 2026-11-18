@@ -251,6 +251,24 @@ footer .wrap{display:flex; justify-content:space-between; align-items:center; fl
 footer img{width:170px; opacity:.85}
 footer small{font-family:var(--font-num); font-size:11px; letter-spacing:.14em; color:var(--dim2)}
 
+/* funding offer box (CTA) */
+.fundbox{position:relative; z-index:2; max-width:600px; margin:0 auto 32px; text-align:left;
+  background:linear-gradient(180deg, rgba(201,169,79,.11), rgba(201,169,79,.03));
+  border:1px solid rgba(201,169,79,.40); border-radius:var(--radius); padding:18px 22px;
+  display:flex; gap:16px; align-items:flex-start}
+.fundbox .fbtag{font-family:var(--font-num); font-weight:700; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--bg); background:var(--gold); border-radius:999px; padding:5px 12px; white-space:nowrap; flex:none; margin-top:3px}
+.fundbox p{margin:0; color:var(--text); font-size:clamp(14px,1.5vw,16px); line-height:1.62}
+@media(max-width:560px){.fundbox{flex-direction:column; gap:11px}}
+
+/* funding logo strip (above footer) */
+.fundstrip{background:#F3EFE4; padding:clamp(22px,3.4vw,32px) 0; position:relative; z-index:2}
+.fundstrip .wrap{display:flex; align-items:center; justify-content:center; gap:clamp(22px,5vw,52px); flex-wrap:wrap}
+.fundstrip img{width:auto; display:block}
+.fundstrip .med{height:clamp(52px,7vw,70px)}
+.fundstrip .bank{height:clamp(40px,5.4vw,54px)}
+.fundstrip .medtxt{font-family:var(--font-num); font-weight:700; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:#5a7d6e}
+
 /* REVEAL */
 .reveal{opacity:0; transform:translateY(26px); transition:opacity .9s var(--ease-out), transform .9s var(--ease-out)}
 .reveal.in{opacity:1; transform:none}
@@ -451,10 +469,21 @@ footer small{font-family:var(--font-num); font-size:11px; letter-spacing:.14em; 
     <p class="eyebrow reveal" data-i18n="cta_eyebrow">Ta emot Maktspelet</p>
     <h2 class="reveal" data-d="1" data-i18n="cta_h2">Vill ni köra det hos er?</h2>
     <p class="lead reveal" data-d="2" data-i18n="cta_lead">Maktspelet byggs för att kunna tas emot och köras av museer och arrangörer. Hör av er så berättar vi hur en installation ser ut, vad som krävs och hur ni kommer igång.</p>
+    <div class="fundbox reveal" data-d="2">
+      <span class="fbtag" data-i18n="fund_tag">Projektfinansierat t.o.m. juni 2027</span>
+      <p data-i18n="fund_body">Fram till juni 2027 är Maktspelet projektfinansierat för spridning i södra Dalarna. Under perioden står ni bara för transporten till och från Borlänge. Med stöd från Sparbanken Bergslagen.</p>
+    </div>
     <div class="btnrow reveal" data-d="2">
       <a class="btn primary" id="mailcta" href="#" data-i18n="cta_primary">Mejla oss — boka Maktspelet →</a>
       <a class="btn ghost" href="#versioner" data-i18n="cta_ghost">Se versionerna</a>
     </div>
+  </div>
+</section>
+
+<section class="fundstrip" id="fundstrip" aria-label="Finansiering" style="display:none">
+  <div class="wrap">
+    <img class="med" src="media/med-stod-fran.png" alt="Med stöd från" onload="document.getElementById('fundstrip').style.display='block'" onerror="this.remove()">
+    <img class="bank" src="media/sparbanken-bergslagen.png" alt="Sparbanken Bergslagen" onload="document.getElementById('fundstrip').style.display='block'" onerror="this.remove()">
   </div>
 </section>
 
@@ -522,6 +551,8 @@ var I18N = {
     cta_lead:"Maktspelet byggs för att tas emot och köras av museer och arrangörer. Hör av er så berättar vi hur ni kommer igång.",
     cta_primary:"Mejla oss — boka Maktspelet →", cta_ghost:"Se versionerna",
     cta_ph:"Platshållare — Maddes exakta mejladress bekräftas av Josef",
+    fund_tag:"Projektfinansierat t.o.m. juni 2027",
+    fund_body:"Fram till juni 2027 är Maktspelet projektfinansierat för spridning i södra Dalarna. Under perioden står ni bara för transporten till och från Borlänge. Med stöd från Sparbanken Bergslagen.",
     footer:"En immersiv upplevelse · utkast",
     mail_subject:"Boka / ta emot Maktspelet",
     mail_body:"Hej Josef och Madeleine,\n\nVi är intresserade av att ta emot Maktspelet hos oss. Berätta gärna mer om hur en installation ser ut och hur vi kommer igång.\n\nVänliga hälsningar,\n"
@@ -580,6 +611,8 @@ var I18N = {
     cta_lead:"Maktspelet is built to be hosted and run by museums and organisers. Get in touch and we'll tell you how to get started.",
     cta_primary:"Email us — book Maktspelet →", cta_ghost:"See the versions",
     cta_ph:"Placeholder — Madde's exact email to be confirmed by Josef",
+    fund_tag:"Project-funded until June 2027",
+    fund_body:"Until June 2027 Maktspelet is project-funded for venues across southern Dalarna. During this period your only cost is transport to and from Borlänge. With support from Sparbanken Bergslagen.",
     footer:"An immersive experience · draft",
     mail_subject:"Booking / hosting Maktspelet",
     mail_body:"Hi Josef and Madeleine,\n\nWe're interested in hosting Maktspelet at our venue. We'd love to hear more about what an installation looks like and how we get started.\n\nBest regards,\n"
