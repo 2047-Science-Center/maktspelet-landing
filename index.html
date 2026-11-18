@@ -262,13 +262,39 @@ footer small{font-family:var(--font-num); font-size:11px; letter-spacing:.14em; 
 .fundbox p{margin:0; color:var(--text); font-size:clamp(14px,1.5vw,16px); line-height:1.62}
 @media(max-width:560px){.fundbox{flex-direction:column; gap:11px}}
 
+/* interest form (CTA) */
+button.btn{border:0; cursor:pointer; font:inherit}
+.intform{max-width:600px; margin:0 auto; text-align:left; overflow:hidden; max-height:0; opacity:0;
+  transition:max-height .55s var(--ease-out), opacity .4s var(--ease-out), margin-top .55s var(--ease-out)}
+.intform.show{max-height:560px; opacity:1; margin-top:26px}
+.intform .row2{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+@media(max-width:560px){.intform .row2{grid-template-columns:1fr; gap:0}}
+.fld{display:block; margin-bottom:13px}
+.fld span{display:block; font-family:var(--font-num); font-weight:700; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); margin-bottom:6px}
+.fld input,.fld textarea{width:100%; background:rgba(10,9,5,.55); border:1px solid var(--edge); border-radius:10px;
+  color:var(--text); font-family:var(--font-disp); font-weight:300; font-size:15px; padding:11px 13px; outline:none;
+  transition:border-color .2s var(--ease-out), box-shadow .2s var(--ease-out)}
+.fld input::placeholder,.fld textarea::placeholder{color:var(--dim2)}
+.fld input:focus,.fld textarea:focus{border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,169,79,.14)}
+.fld textarea{resize:vertical; min-height:68px; line-height:1.5}
+.hp{position:absolute; left:-9999px; width:1px; height:1px; opacity:0}
+.formfoot{display:flex; flex-direction:column; align-items:center; gap:11px; margin-top:4px}
+.formstatus{margin:0; min-height:1.1em; font-family:var(--font-num); font-size:13px; letter-spacing:.02em; color:var(--dim)}
+.formstatus.ok{color:var(--bjorn)}
+.formstatus.err{color:#D7584B}
+.btn[disabled]{opacity:.6; pointer-events:none}
+
 /* persistent funding bar (fixed, top) */
 .fundbar{position:fixed; top:0; left:0; right:0; z-index:50; height:var(--fundbar-h);
   background:#FFFFFF; border-bottom:1px solid #E6DFCC;
   display:flex; align-items:center; justify-content:center; gap:clamp(10px,2vw,16px); padding:0 14px}
 .fundbar .lbl{font-family:var(--font-num); font-weight:700; font-size:clamp(9px,1.3vw,11px); letter-spacing:.2em; text-transform:uppercase; color:#5f8273; white-space:nowrap}
-.fundbar .bank-txt{font-family:var(--font-disp); font-weight:700; font-size:clamp(12px,1.6vw,14px); letter-spacing:.01em; color:#141109; white-space:nowrap}
-.fundbar img.bank{height:clamp(26px,3.6vw,34px); width:auto; display:none}
+.fundbar .fund-item{display:inline-flex; align-items:center}
+.fundbar .fund-sep{color:#c9c2ad; font-size:13px}
+.fundbar .fund-txt{font-family:var(--font-disp); font-weight:700; font-size:clamp(11px,1.5vw,13.5px); letter-spacing:.01em; color:#141109; white-space:nowrap}
+.fundbar img.bank{height:clamp(24px,3.4vw,32px); width:auto; display:none}
+.fundbar img.arv{height:clamp(22px,3.1vw,30px); width:auto; display:none}
+@media(max-width:600px){.fundbar{gap:8px} .fundbar .lbl{font-size:8.5px; letter-spacing:.12em}}
 
 /* REVEAL */
 .reveal{opacity:0; transform:translateY(26px); transition:opacity .9s var(--ease-out), transform .9s var(--ease-out)}
@@ -291,10 +317,19 @@ footer small{font-family:var(--font-num); font-size:11px; letter-spacing:.14em; 
 <!-- NAV -->
 <div class="fundbar">
   <span class="lbl" data-i18n="fund_lbl">Med stöd från</span>
-  <img class="bank" src="media/sparbanken-bergslagen.jpg" alt="Sparbanken Bergslagen"
-       onload="this.style.display='block';var t=document.getElementById('bankTxt');if(t)t.style.display='none'"
-       onerror="this.remove()">
-  <span class="bank-txt" id="bankTxt">Sparbanken Bergslagen</span>
+  <span class="fund-item">
+    <img class="arv" src="media/arvsfonden.png" alt="Allmänna Arvsfonden"
+         onload="this.style.display='block';var t=this.nextElementSibling;if(t)t.style.display='none'"
+         onerror="this.remove()">
+    <span class="fund-txt">Allmänna Arvsfonden</span>
+  </span>
+  <span class="fund-sep" aria-hidden="true">·</span>
+  <span class="fund-item">
+    <img class="bank" src="media/sparbanken-bergslagen.jpg" alt="Sparbanken Bergslagen"
+         onload="this.style.display='block';var t=this.nextElementSibling;if(t)t.style.display='none'"
+         onerror="this.remove()">
+    <span class="fund-txt">Sparbanken Bergslagen</span>
+  </span>
 </div>
 
 <nav class="nav" id="nav">
@@ -483,9 +518,27 @@ footer small{font-family:var(--font-num); font-size:11px; letter-spacing:.14em; 
       <p data-i18n="fund_body">Fram till juni 2027 är Maktspelet projektfinansierat för spridning i södra Dalarna. Under perioden står ni bara för transporten till och från Borlänge. Med stöd från Sparbanken Bergslagen.</p>
     </div>
     <div class="btnrow reveal" data-d="2">
-      <a class="btn primary" id="mailcta" href="#" data-i18n="cta_primary">Mejla oss — boka Maktspelet →</a>
+      <button class="btn primary" id="openForm" type="button" data-i18n="cta_primary">Anmäl intresse →</button>
       <a class="btn ghost" href="#versioner" data-i18n="cta_ghost">Se versionerna</a>
     </div>
+
+    <form class="intform reveal" id="intform" data-d="2" novalidate>
+      <div class="row2">
+        <label class="fld"><span data-i18n="f_name">Vilka är ni?</span>
+          <input type="text" name="namn" required autocomplete="organization" placeholder="Museum / arrangör / namn" data-i18n-ph="f_name_ph"></label>
+        <label class="fld"><span data-i18n="f_email">Er e-post</span>
+          <input type="email" name="email" required autocomplete="email" placeholder="namn@exempel.se" data-i18n-ph="f_email_ph"></label>
+      </div>
+      <label class="fld"><span data-i18n="f_when">När vill ni ta emot det?</span>
+        <input type="text" name="nar" placeholder="T.ex. våren 2027" data-i18n-ph="f_when_ph"></label>
+      <label class="fld"><span data-i18n="f_msg">Kort kommentar</span>
+        <textarea name="meddelande" rows="3" placeholder="Kort om er och ert sammanhang" data-i18n-ph="f_msg_ph"></textarea></label>
+      <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="formfoot">
+        <button class="btn primary" type="submit" id="submitBtn" data-i18n="f_send">Skicka intresseanmälan →</button>
+        <p class="formstatus" id="formstatus" aria-live="polite"></p>
+      </div>
+    </form>
   </div>
 </section>
 
@@ -551,11 +604,17 @@ var I18N = {
     cta_eyebrow:"Ta emot Maktspelet",
     cta_h2:"Vill ni köra det hos er?",
     cta_lead:"Maktspelet byggs för att tas emot och köras av museer och arrangörer. Hör av er så berättar vi hur ni kommer igång.",
-    cta_primary:"Mejla oss — boka Maktspelet →", cta_ghost:"Se versionerna",
+    cta_primary:"Anmäl intresse →", cta_ghost:"Se versionerna",
+    f_name:"Vilka är ni?", f_name_ph:"Museum / arrangör / namn",
+    f_email:"Er e-post", f_email_ph:"namn@exempel.se",
+    f_when:"När vill ni ta emot det?", f_when_ph:"T.ex. våren 2027",
+    f_msg:"Kort kommentar", f_msg_ph:"Kort om er och ert sammanhang",
+    f_send:"Skicka intresseanmälan →",
+    f_sending:"Skickar…", f_ok:"Tack! Vi hör av oss.", f_err:"Något gick fel — försök igen eller mejla oss direkt.",
     cta_ph:"Platshållare — Maddes exakta mejladress bekräftas av Josef",
     fund_lbl:"Med stöd från",
     fund_tag:"Projektfinansierat t.o.m. juni 2027",
-    fund_body:"Fram till juni 2027 är Maktspelet projektfinansierat för spridning i södra Dalarna. Under perioden står ni bara för transporten till och från Borlänge. Med stöd från Sparbanken Bergslagen.",
+    fund_body:"Fram till juni 2027 är Maktspelet projektfinansierat för spridning i södra Dalarna. Under perioden står ni bara för transporten till och från Borlänge. Med stöd från Allmänna Arvsfonden och Sparbanken Bergslagen.",
     footer:"En immersiv upplevelse · utkast",
     mail_subject:"Boka / ta emot Maktspelet",
     mail_body:"Hej Josef och Madeleine,\n\nVi är intresserade av att ta emot Maktspelet hos oss. Berätta gärna mer om hur en installation ser ut och hur vi kommer igång.\n\nVänliga hälsningar,\n"
@@ -612,11 +671,17 @@ var I18N = {
     cta_eyebrow:"Host Maktspelet",
     cta_h2:"Want to run it at your venue?",
     cta_lead:"Maktspelet is built to be hosted and run by museums and organisers. Get in touch and we'll tell you how to get started.",
-    cta_primary:"Email us — book Maktspelet →", cta_ghost:"See the versions",
+    cta_primary:"Register interest →", cta_ghost:"See the versions",
+    f_name:"Who are you?", f_name_ph:"Museum / organiser / name",
+    f_email:"Your email", f_email_ph:"name@example.com",
+    f_when:"When would you host it?", f_when_ph:"e.g. spring 2027",
+    f_msg:"Short note", f_msg_ph:"A little about you and your context",
+    f_send:"Send interest →",
+    f_sending:"Sending…", f_ok:"Thank you! We'll be in touch.", f_err:"Something went wrong — try again or email us directly.",
     cta_ph:"Placeholder — Madde's exact email to be confirmed by Josef",
     fund_lbl:"With support from",
     fund_tag:"Project-funded until June 2027",
-    fund_body:"Until June 2027 Maktspelet is project-funded for venues across southern Dalarna. During this period your only cost is transport to and from Borlänge. With support from Sparbanken Bergslagen.",
+    fund_body:"Until June 2027 Maktspelet is project-funded for venues across southern Dalarna. During this period your only cost is transport to and from Borlänge. With support from Allmänna Arvsfonden and Sparbanken Bergslagen.",
     footer:"An immersive experience · draft",
     mail_subject:"Booking / hosting Maktspelet",
     mail_body:"Hi Josef and Madeleine,\n\nWe're interested in hosting Maktspelet at our venue. We'd love to hear more about what an installation looks like and how we get started.\n\nBest regards,\n"
@@ -624,10 +689,12 @@ var I18N = {
 };
 
 var MAIL_TO = "josef.sjonneby@2047.nu,madelene.stenberg@2047.nu,klara.jons@2047.nu";
+/* Klistra in ditt Formspree-form-id här, ex: "https://formspree.io/f/abcwxyz".
+   Tills dess faller formuläret tillbaka på ett förifyllt mail. */
+var FORMSPREE_ENDPOINT = "https://formspree.io/f/REPLACE_WITH_ID";
 
 (function(){
   var htmlEl = document.documentElement;
-  var mailcta = document.getElementById('mailcta');
 
   function apply(lang){
     var dict = I18N[lang] || I18N.sv;
@@ -636,11 +703,10 @@ var MAIL_TO = "josef.sjonneby@2047.nu,madelene.stenberg@2047.nu,klara.jons@2047.
       var k = el.getAttribute('data-i18n');
       if(dict[k] != null) el.innerHTML = dict[k];
     });
-    /* mailto with both recipients */
-    mailcta.setAttribute('href',
-      'mailto:' + MAIL_TO +
-      '?subject=' + encodeURIComponent(dict.mail_subject) +
-      '&body=' + encodeURIComponent(dict.mail_body));
+    document.querySelectorAll('[data-i18n-ph]').forEach(function(el){
+      var k = el.getAttribute('data-i18n-ph');
+      if(dict[k] != null) el.setAttribute('placeholder', dict[k]);
+    });
     document.querySelectorAll('.langtoggle button').forEach(function(b){
       b.classList.toggle('on', b.getAttribute('data-lang') === lang);
     });
@@ -654,6 +720,48 @@ var MAIL_TO = "josef.sjonneby@2047.nu,madelene.stenberg@2047.nu,klara.jons@2047.
   document.querySelectorAll('.langtoggle button').forEach(function(b){
     b.addEventListener('click', function(){ apply(b.getAttribute('data-lang')); });
   });
+
+  /* ——— interest form (Formspree) ——— */
+  var openForm = document.getElementById('openForm');
+  var intform  = document.getElementById('intform');
+  if(openForm && intform){
+    openForm.addEventListener('click', function(){
+      intform.classList.add('show');
+      openForm.style.display = 'none';
+      setTimeout(function(){ var f = intform.querySelector('input[name="namn"]'); if(f) f.focus(); }, 280);
+    });
+    intform.addEventListener('submit', function(e){
+      e.preventDefault();
+      var dict = I18N[htmlEl.lang] || I18N.sv;
+      var status = document.getElementById('formstatus');
+      var btn = document.getElementById('submitBtn');
+      if(intform.elements['_gotcha'] && intform.elements['_gotcha'].value) return; /* honeypot */
+
+      /* fallback until Formspree-endpoint är satt: förifyllt mail */
+      if(FORMSPREE_ENDPOINT.indexOf('REPLACE') > -1){
+        var b = 'Vilka ni är: ' + intform.elements['namn'].value
+              + '\nE-post: '    + intform.elements['email'].value
+              + '\nNär: '       + intform.elements['nar'].value
+              + '\nKommentar: ' + intform.elements['meddelande'].value;
+        window.location.href = 'mailto:' + MAIL_TO
+          + '?subject=' + encodeURIComponent('Intresseanmälan — Maktspelet')
+          + '&body='    + encodeURIComponent(b);
+        return;
+      }
+
+      status.className = 'formstatus'; status.textContent = dict.f_sending; btn.disabled = true;
+      var data = new FormData(intform);
+      data.append('_subject', 'Intresseanmälan — Maktspelet');
+      data.append('_cc', 'madelene.stenberg@2047.nu,klara.jons@2047.nu');
+      fetch(FORMSPREE_ENDPOINT, { method:'POST', body:data, headers:{ 'Accept':'application/json' } })
+        .then(function(r){
+          if(r.ok){ intform.reset(); status.className='formstatus ok'; status.textContent = dict.f_ok; }
+          else    { status.className='formstatus err'; status.textContent = dict.f_err; }
+          btn.disabled = false;
+        })
+        .catch(function(){ status.className='formstatus err'; status.textContent = dict.f_err; btn.disabled = false; });
+    });
+  }
 
   /* ——— scroll reveal ——— */
   var io = new IntersectionObserver(function(entries){
